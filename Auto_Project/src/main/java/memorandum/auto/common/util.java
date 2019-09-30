@@ -1,10 +1,6 @@
 package memorandum.auto.common;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,20 +10,12 @@ public class util {
 	private static final Logger logger = LoggerFactory.getLogger(util.class);
 	
 	public static void ObjectLogger(Object param){
-		if (param instanceof HashMap) {
-			logger.info(tab + "===== HashMap Log Start =====");
+		if (param instanceof Map) {
+			logger.info(tab + "===== Map Log Start =====");
 			tab = tab + "    " ;
-			HashMapLog((HashMap<Object, Object>) param);
+			MapLog((HashMap<Object, Object>) param);
 			tab = tab.substring(0, tab.length()-4);
-			logger.info(tab + "===== HashMap Log Start =====");
-		}
-		if (param instanceof LinkedHashMap) {
-			logger.info(tab + "===== LinkedHashMap Log Start =====");
-			tab = tab + "    " ;
-			LinkedHashMapLog((LinkedHashMap<Object, Object>) param);
-			tab = tab.substring(0, tab.length()-4);
-
-			logger.info(tab + "===== LinkedHashMap Log Start =====");
+			logger.info(tab + "===== Map Log Start =====");
 		}
 		if (param instanceof List) {
 			logger.info(tab + "===== List Log Start =====");
@@ -37,8 +25,22 @@ public class util {
 			logger.info(tab + "===== List Log Start =====");
 		}
 		
+		if (param instanceof Arrays) {
+			logger.info(tab + "===== Arrays Log Start =====");
+			tab = tab + "    " ;
+			ArraysLog((Arrays) param);
+			tab = tab.substring(0, tab.length()-4);
+			logger.info(tab + "===== Arrays Log Start =====");
+		}
+		if (param instanceof String || param instanceof Integer) {
+			logger.info(tab + "===== param ===== : " + param.toString());
+		}
+		
 	}
-
+	private static void ArraysLog(Arrays arr) {
+		
+		
+	}
 	private static void ListLog(List list) {
 		for (int i = 0 ; i < list.size(); i ++) {
 			Object obj = list.get(i);
@@ -46,25 +48,34 @@ public class util {
 			ObjectLogger(obj);
 		}
 	}
-	private static void LinkedHashMapLog(LinkedHashMap<Object, Object> map) {
+	private static void MapLog(Map<Object, Object> map) {
 		Set set = map.keySet();
 		Iterator iter = set.iterator();
 		
+		int size = 0;
+		while (iter.hasNext()) {
+			String key = (String) iter.next();
+			if (size < key.length()) {
+				size = key.length();
+			}
+		}
+		iter = set.iterator();
 		while (iter.hasNext()) {
 			String key = (String) iter.next();
 			String value = (String) map.get(key);
+			key = RPAD(key, size);
 			logger.info(String.format(tab + "Key : %s, Value : %s", key, value));
 		}
 	}
-	private static void HashMapLog(HashMap<Object, Object> map) {
-		Set set = map.keySet();
-		Iterator iter = set.iterator();
-		
-		while (iter.hasNext()) {
-			String key = (String) iter.next();
-			String value = (String) map.get(key);
-			logger.info(String.format(tab + "Key : %s, Value : %s", key, value));
+	
+	private static String RPAD(String str, int len) {
+		int tmplen = len - str.length();
+		if (tmplen > 0) {
+			for (int i = 0 ; i < tmplen; i ++) {
+				str = str + " ";
+			}
 		}
+		return str;
 	}
 	
 }
