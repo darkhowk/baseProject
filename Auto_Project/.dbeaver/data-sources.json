@@ -1,0 +1,41 @@
+{
+	"folders": {},
+	"connections": {
+		"oracle_thin-16d8076452c-3932f05198abc06e": {
+			"provider": "oracle",
+			"driver": "oracle_thin",
+			"name": "Oracle - ORCLCDB",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "memorandum.iptime.org",
+				"port": "1521",
+				"database": "ORCLCDB",
+				"url": "jdbc:oracle:thin:@//memorandum.iptime.org:1521/ORCLCDB",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-always-use-dba-views@": "false",
+					"@dbeaver-sid-service@": "SERVICE",
+					"@dbeaver-meta-use-simple-constraints@": "false",
+					"@dbeaver-use-rule-hint@": "false",
+					"@dbeaver-use-meta-optimizer@": "false",
+					"@dbeaver-connection-type@": "BASIC",
+					"@dbeaver-check-schema-content@": "false",
+					"@dbeaver-meta-use-sys-schema@": "false",
+					"@dbeaver-always-show-dba@": "false"
+				},
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false
+		}
+	}
+}
