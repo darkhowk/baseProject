@@ -14,6 +14,9 @@
 	<logger name="memorandum.auto.controller">
 		<level value="info" />
 	</logger>
+	<logger name="memorandum.auto.scheduler">
+		<level value="info" />
+	</logger>
 	<logger name="memorandum.auto.common">
 		<level value="info" />
 	</logger>

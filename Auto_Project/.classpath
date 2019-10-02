@@ -35,5 +35,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/main/resources/transmission-rpc.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
