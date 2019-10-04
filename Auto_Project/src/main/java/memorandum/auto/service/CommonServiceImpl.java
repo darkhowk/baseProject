@@ -2,6 +2,8 @@ package memorandum.auto.service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,5 +32,26 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Object getMain() {
 		return dao.getMain();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getRegularList() {
+		return dao.getRegularList();
+	}
+
+	@Override
+	public String getLastEp(String name) {
+		return getLastEp(name, "S01");
+	}
+
+	@Override
+	public String getLastEp(String name, String season) {
+		// TODO Auto-generated method stub
+		return dao.getLastEp(name, season);
+	}
+
+	@Override
+	public int insertLog(HashMap<String, Object> log) {
+		return dao.insertLog(log);
 	}
 }

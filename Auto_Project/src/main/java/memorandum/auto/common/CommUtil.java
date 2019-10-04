@@ -5,9 +5,9 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class util {
+public class CommUtil {
 	static String tab = "";
-	private static final Logger logger = LoggerFactory.getLogger(util.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommUtil.class);
 	
 	public static void ObjectLogger(Object param){
 		if (param instanceof Map) {
@@ -62,9 +62,9 @@ public class util {
 		iter = set.iterator();
 		while (iter.hasNext()) {
 			String key = (String) iter.next();
-			String value = (String) map.get(key);
+			Object value =  map.get(key);
 			key = RPAD(key, size);
-			logger.info(String.format(tab + "Key : %s, Value : %s", key, value));
+			logger.info(String.format(tab + "Key : %s, Value : %s", key, value.toString()));
 		}
 	}
 	

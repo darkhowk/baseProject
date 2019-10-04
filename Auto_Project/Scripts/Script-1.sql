@@ -12,7 +12,6 @@
 	
 */
 
-
 /*
  * REGULAR DOWN LIST
  * 1. SEQ

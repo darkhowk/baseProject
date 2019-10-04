@@ -32,6 +32,11 @@
 			<name>stil4m-releases</name>
 			<url>https://github.com/stil4m/maven-repository/raw/master/releases/</url>
 		</repository>
+		<repository>
+			<id>stil4m-releases</id>
+			<name>stil4m-releases</name>
+			<url>https://github.com/stil4m/maven-repository/raw/master/releases/</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<!-- Spring -->
@@ -239,6 +244,13 @@
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>nl.stil4m</groupId>
+			<artifactId>transmission-rpc-java</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

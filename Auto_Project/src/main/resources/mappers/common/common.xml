@@ -4,4 +4,50 @@
 		<select id="getMain" parameterType="HashMap" resultType="java.util.HashMap">
 			SELECT * FROM TORRENT.DOWNLIST
 		</select>
+		
+		<select id="getRegularList" parameterType="HashMap" resultType="java.util.HashMap">
+			SELECT 
+				  NAME
+				, SEASON
+				, CATEGORY
+			FROM REGULAR_DOWN_LIST 
+			WHERE 1=1
+				AND USE_YN = 'Y'
+			GROUP BY NAME, SEASON, CATEGORY
+		</select>
+		
+		<select id="getLastEp" parameterType="HashMap" resultType="String">
+			SELECT 
+				EP 
+			FROM (
+				SELECT 
+					EP 
+				FROM REGULAR_DOWN_LIST 
+				WHERE 1=1 
+					AND USE_YN = 'Y' 
+					AND NAME = #{name}  
+					AND SEASON = #{season}  
+				ORDER BY EP DESC
+				)
+			WHERE 1=1 
+				AND ROWNUM = 1
+		</select>
+		<insert id="insertLog" parameterType="HashMap">
+			INSERT INTO REGULAR_DOWN_LIST
+					VALUES (
+					      REGULAR_DOWN_LIST_SEQ.NEXTVAL
+					    , #{name}  
+					    , #{ep}  
+					    , #{season}  
+					    , #{stat}
+					    , #{category}
+					    , #{reg_id}
+					    , SYSDATE
+					    , ''
+					    , SYSDATE
+					    , #{use_yn}
+					)
+		</insert>
     </mapper>
+    
+    

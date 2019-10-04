@@ -12,7 +12,6 @@
 	
 */
 
-
 /*
  * REGULAR DOWN LIST
  * 1. SEQ
@@ -21,10 +20,8 @@
  * 4. SEASON
  * 5. STAT
  * 6. CATEGORY
- * 
+ * 7. REG_ID
+ * 8. REG_DATE		DATE
+ * 9. UPD_ID
+ * 10. UPD_DATE		DATE
  */
-
-/*
- * Down Log
- * 
- */*/
