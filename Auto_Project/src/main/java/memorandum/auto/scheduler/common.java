@@ -50,7 +50,9 @@ public class common {
 		List<HashMap<String, Object>> downList = service.getRegularList();
 
 		for (HashMap<String, Object> item : downList) {
-			search(item);
+			if (search(item) == 0) {
+				
+			}
 		}
 
 		logger.info("Reqular Down End");
@@ -61,7 +63,6 @@ public class common {
 		String season = (String) item.get("SEASON");
 		String lastEp = service.getLastEp(name);
 		String category = (String) item.get("CATEGORY");
-		System.out.println(category);
 		try {
 			String keyword = URLEncoder.encode(name, "UTF-8");
 			String url = "https://torrentwal.com/bbs/s.php?k=";
@@ -73,8 +74,9 @@ public class common {
 			// 1. 마그넷주소, 타이틀, 에피소드, 시즌 확인
 			Elements els = doc.select("tbody .bg1");
 			for (Element el : els) {
-				String magnet = el.select(".num a").attr("href").replace("javascript:Mag_dn('", "magnet:?xt=urn:btih:");
-				magnet = magnet.substring(0, magnet.length()-2);
+				String magnet = el.select(".num a").attr("href")
+						.replace("javascript:Mag_dn('", "magnet:?xt=urn:btih:");
+				magnet = magnet.substring(0, magnet.length() - 2);
 				String title = el.select(".subject").text();
 				String ep = "";
 				String se = "";
@@ -84,10 +86,8 @@ public class common {
 				while (seMat.find()) {
 					se = seMat.group(1);
 				}
-				if (se.equals("")) {
+				if (se.equals("") || se.equals("S01")) {
 					se = "S01";
-				}
-				if (se.equals(season)) {
 					Pattern epPtn = Pattern.compile("^.*(E.[0-9]{1,3}).*$");
 					Matcher epMat = epPtn.matcher(title);
 					int lastep = Integer
@@ -110,10 +110,39 @@ public class common {
 							log.put("reg_id", "SYSTEM");
 							log.put("use_yn", 'Y');
 							service.insertLog(log);
-							
+
+						}
+					}
+				} else {
+					if (se.equals(season)) {
+						Pattern epPtn = Pattern.compile("^.*(E.[0-9]{1,3}).*$");
+						Matcher epMat = epPtn.matcher(title);
+						int lastep = Integer
+								.parseInt(lastEp.substring(1, lastEp.length()));
+						int crruntep = 0;
+						while (epMat.find()) {
+							ep = epMat.group(1);
+							crruntep = Integer
+									.parseInt(ep.substring(1, ep.length()));
+						}
+						if (crruntep > lastep) {
+							// 토렌트 받기
+							if (addTorrent(magnet)) {
+								HashMap<String, Object> log = new HashMap<String, Object>();
+								log.put("name", name);
+								log.put("season", se);
+								log.put("ep", ep);
+								log.put("stat", "FS00");
+								log.put("category", category);
+								log.put("reg_id", "SYSTEM");
+								log.put("use_yn", 'Y');
+								service.insertLog(log);
+
+							}
 						}
 					}
 				}
+
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -137,7 +166,6 @@ public class common {
 			RpcClient client = new RpcClient(rpcConfiguration, objectMapper);
 			rpcClient = new TransmissionRpcClient(client);
 			AddTorrentInfo addTorrentInfo = new AddTorrentInfo();
-			System.out.println("magnet :: " + magnet);
 			addTorrentInfo.setFilename(magnet);
 			AddedTorrentInfo ati = rpcClient.addTorrent(addTorrentInfo);
 			TorrentInfo info = ati.getTorrentInfo();
