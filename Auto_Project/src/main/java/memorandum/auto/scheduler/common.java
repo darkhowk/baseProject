@@ -51,7 +51,7 @@ public class common {
 
 		for (HashMap<String, Object> item : downList) {
 			if (search(item) == 0) {
-				
+
 			}
 		}
 
@@ -67,15 +67,13 @@ public class common {
 			String keyword = URLEncoder.encode(name, "UTF-8");
 			String url = "https://torrentwal.com/bbs/s.php?k=";
 
-			Connection conn = Jsoup.connect(url + keyword).header("User-Agent",
-					"Mozilla/5.0");
+			Connection conn = Jsoup.connect(url + keyword).header("User-Agent", "Mozilla/5.0");
 			Document doc = conn.get();
 
 			// 1. 마그넷주소, 타이틀, 에피소드, 시즌 확인
 			Elements els = doc.select("tbody .bg1");
 			for (Element el : els) {
-				String magnet = el.select(".num a").attr("href")
-						.replace("javascript:Mag_dn('", "magnet:?xt=urn:btih:");
+				String magnet = el.select(".num a").attr("href").replace("javascript:Mag_dn('", "magnet:?xt=urn:btih:");
 				magnet = magnet.substring(0, magnet.length() - 2);
 				String title = el.select(".subject").text();
 				String ep = "";
@@ -90,13 +88,11 @@ public class common {
 					se = "S01";
 					Pattern epPtn = Pattern.compile("^.*(E.[0-9]{1,3}).*$");
 					Matcher epMat = epPtn.matcher(title);
-					int lastep = Integer
-							.parseInt(lastEp.substring(1, lastEp.length()));
+					int lastep = Integer.parseInt(lastEp.substring(1, lastEp.length()));
 					int crruntep = 0;
 					while (epMat.find()) {
 						ep = epMat.group(1);
-						crruntep = Integer
-								.parseInt(ep.substring(1, ep.length()));
+						crruntep = Integer.parseInt(ep.substring(1, ep.length()));
 					}
 					if (crruntep > lastep) {
 						// 토렌트 받기
@@ -117,13 +113,11 @@ public class common {
 					if (se.equals(season)) {
 						Pattern epPtn = Pattern.compile("^.*(E.[0-9]{1,3}).*$");
 						Matcher epMat = epPtn.matcher(title);
-						int lastep = Integer
-								.parseInt(lastEp.substring(1, lastEp.length()));
+						int lastep = Integer.parseInt(lastEp.substring(1, lastEp.length()));
 						int crruntep = 0;
 						while (epMat.find()) {
 							ep = epMat.group(1);
-							crruntep = Integer
-									.parseInt(ep.substring(1, ep.length()));
+							crruntep = Integer.parseInt(ep.substring(1, ep.length()));
 						}
 						if (crruntep > lastep) {
 							// 토렌트 받기
@@ -158,11 +152,9 @@ public class common {
 		try {
 
 			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper
-					.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			RpcConfiguration rpcConfiguration = new RpcConfiguration();
-			rpcConfiguration.setHost(URI.create(
-					"http://memorandum.iptime.org:9091/transmission/rpc/"));
+			rpcConfiguration.setHost(URI.create("http://memorandum.iptime.org:9091/transmission/rpc/"));
 			RpcClient client = new RpcClient(rpcConfiguration, objectMapper);
 			rpcClient = new TransmissionRpcClient(client);
 			AddTorrentInfo addTorrentInfo = new AddTorrentInfo();

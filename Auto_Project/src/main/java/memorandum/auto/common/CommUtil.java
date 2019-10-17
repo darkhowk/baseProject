@@ -5,6 +5,7 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class CommUtil {
 	static String tab = "";
 	private static final Logger logger = LoggerFactory.getLogger(CommUtil.class);
@@ -48,6 +49,7 @@ public class CommUtil {
 			ObjectLogger(obj);
 		}
 	}
+	
 	private static void MapLog(Map<Object, Object> map) {
 		Set set = map.keySet();
 		Iterator iter = set.iterator();
